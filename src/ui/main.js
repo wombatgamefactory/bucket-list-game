@@ -82,7 +82,6 @@ function saveScrollPositions() {
         scrollLeft: playerCell.scrollLeft,
         scrollTop: playerCell.scrollTop
       };
-      console.log(`Saved playerCell${i} scroll:`, positions[`playerCell${i}`]);
     }
 
     // Also check for any grid elements that might be scrolling
@@ -92,7 +91,6 @@ function saveScrollPositions() {
         scrollLeft: grid.scrollLeft,
         scrollTop: grid.scrollTop
       };
-      console.log(`Saved grid${i} scroll:`, positions[`grid${i}`]);
     }
   }
   return positions;
@@ -114,7 +112,6 @@ function restoreScrollPositions(positions) {
     if (element) {
       element.scrollLeft = scroll.scrollLeft;
       element.scrollTop = scroll.scrollTop;
-      console.log(`Restored ${key} scroll to:`, scroll);
     }
   }
 }
@@ -200,7 +197,16 @@ function startGameLoop() {
 
       // Draft phase
       if (gameState.gamePhase === 'draft') {
-        const draftPromise = showProcessingIndicator(aiDifficulty);
+        const processingTime = getProcessingTime(aiDifficulty);
+        let draftPromise = null;
+
+        // Only show indicator for delays >= 1 second
+        if (processingTime >= 1000) {
+          draftPromise = showProcessingIndicator(aiDifficulty);
+        } else {
+          // Short delay without indicator
+          draftPromise = new Promise(r => setTimeout(r, processingTime));
+        }
 
         let cardIndex;
         if (aiDifficulty === 'strategic') {
@@ -220,10 +226,8 @@ function startGameLoop() {
         await draftPromise;
       }
 
-      // Place phase
+      // Place phase (instant, no processing indicator needed)
       if (gameState.gamePhase === 'place') {
-        const placePromise = showProcessingIndicator(aiDifficulty);
-
         const validCells = getValidPlacementCells(gameState);
         let cellIndex;
 
@@ -241,7 +245,6 @@ function startGameLoop() {
 
         placeCard(gameState, cellIndex);
         updateDisplay();
-        await placePromise;
       }
     }
 

@@ -62,6 +62,10 @@ function findRunsInLine(cards) {
         currentRun = { startIdx: i, length: 1, symbol: cards[i] };
       } else if (symbolsMatch(currentRun.symbol, cards[i])) {
         currentRun.length += 1;
+        // If the run symbol is WILD and we matched a concrete symbol, update to the concrete one
+        if (currentRun.symbol === 'WILD' && cards[i] !== 'WILD') {
+          currentRun.symbol = cards[i];
+        }
       } else {
         // Symbol changed, end current run
         if (currentRun.length >= 4) {
