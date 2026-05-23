@@ -1,23 +1,24 @@
 // Bucket List: Heuristic AI Bot
-// Strategy: build toward runs, prioritize wild cards
+// Strategy: place cards to extend sequences; when impossible, minimize damage
 
-import { getValidPlacementCells } from '../engine/game.js';
 import { calculateRunScore } from '../engine/scoring.js';
 
-// Score a card based on how well it extends existing runs
-function scoreCard(card, grid) {
-  let score = 0;
+function getValidPlacementCells(grid) {
+  const validCells = [];
+  const isEmpty = grid.every(cell => cell === null);
 
-  // Count adjacent cards that match habitat or diet
+  if (isEmpty) {
+    for (let i = 0; i < 30; i++) {
+      validCells.push(i);
+    }
+    return validCells;
+  }
+
   for (let i = 0; i < 30; i++) {
-    const existingCard = grid[i];
-    if (!existingCard) continue;
+    if (grid[i] !== null) continue;
 
-    // Check if adjacent (4-adjacent neighbors)
     const row = Math.floor(i / 6);
     const col = i % 6;
-    const cardRow = Math.floor(i / 6);
-    const cardCol = i % 6;
 
     const neighbors = [
       [row - 1, col],
@@ -29,37 +30,153 @@ function scoreCard(card, grid) {
     for (const [nrow, ncol] of neighbors) {
       if (nrow >= 0 && nrow < 5 && ncol >= 0 && ncol < 6) {
         const nidx = nrow * 6 + ncol;
-        if (nidx === i) continue;
-
-        const neighborCard = grid[nidx];
-        if (neighborCard) {
-          // Check habitat match
-          if (card.habitat === neighborCard.habitat ||
-              card.habitat === 'WILD' ||
-              neighborCard.habitat === 'WILD') {
-            score += 2;
-          }
-
-          // Check diet match
-          if (card.diet === neighborCard.diet ||
-              card.diet === 'WILD' ||
-              neighborCard.diet === 'WILD') {
-            score += 2;
-          }
+        if (grid[nidx] !== null) {
+          validCells.push(i);
+          break;
         }
       }
     }
   }
 
-  // Wild cards are always valuable
-  if (card.habitat === 'WILD' || card.diet === 'WILD') {
-    score += 4;
-  }
-
-  return score;
+  return validCells;
 }
 
-// Draft strategy: pick the highest-scoring market card
+function cardMatches(card1, card2) {
+  return (card1.habitat === card2.habitat ||
+          card1.habitat === 'WILD' ||
+          card2.habitat === 'WILD' ||
+          card1.diet === card2.diet ||
+          card1.diet === 'WILD' ||
+          card2.diet === 'WILD');
+}
+
+function getMatchingNeighbors(card, grid, cellIndex) {
+  const matches = { habitat: [], diet: [] };
+  const row = Math.floor(cellIndex / 6);
+  const col = cellIndex % 6;
+
+  const neighbors = [
+    [row - 1, col],
+    [row + 1, col],
+    [row, col - 1],
+    [row, col + 1],
+  ];
+
+  for (const [nrow, ncol] of neighbors) {
+    if (nrow >= 0 && nrow < 5 && ncol >= 0 && ncol < 6) {
+      const nidx = nrow * 6 + ncol;
+      const neighborCard = grid[nidx];
+
+      if (neighborCard) {
+        if (card.habitat === neighborCard.habitat ||
+            card.habitat === 'WILD' ||
+            neighborCard.habitat === 'WILD') {
+          matches.habitat.push(nidx);
+        }
+        if (card.diet === neighborCard.diet ||
+            card.diet === 'WILD' ||
+            neighborCard.diet === 'WILD') {
+          matches.diet.push(nidx);
+        }
+      }
+    }
+  }
+
+  return matches;
+}
+
+function countSequenceLength(grid, startIndex, matchesWith) {
+  let length = 1;
+  const row = Math.floor(startIndex / 6);
+  const col = startIndex % 6;
+
+  // Check all 4 directions
+  const directions = [
+    { dr: -1, dc: 0 }, // up
+    { dr: 1, dc: 0 },  // down
+    { dr: 0, dc: -1 }, // left
+    { dr: 0, dc: 1 },  // right
+  ];
+
+  for (const { dr, dc } of directions) {
+    let r = row + dr;
+    let c = col + dc;
+    while (r >= 0 && r < 5 && c >= 0 && c < 6) {
+      const idx = r * 6 + c;
+      const cell = grid[idx];
+      if (cell && cardMatches(cell, matchesWith)) {
+        length++;
+        r += dr;
+        c += dc;
+      } else {
+        break;
+      }
+    }
+  }
+
+  return length;
+}
+
+function calculatePlacementDamage(card, grid, cellIndex) {
+  // Lower damage = better placement for non-productive cards
+  let damage = 0;
+  const row = Math.floor(cellIndex / 6);
+  const col = cellIndex % 6;
+
+  const neighbors = [
+    [row - 1, col],
+    [row + 1, col],
+    [row, col - 1],
+    [row, col + 1],
+  ];
+
+  // For each neighbor, check if placing a non-match blocks a sequence
+  for (const [nrow, ncol] of neighbors) {
+    if (nrow >= 0 && nrow < 5 && ncol >= 0 && ncol < 6) {
+      const nidx = nrow * 6 + ncol;
+      const neighborCard = grid[nidx];
+
+      if (neighborCard && !cardMatches(card, neighborCard)) {
+        // This placement blocks this neighbor
+        const seqLength = countSequenceLength(grid, nidx, neighborCard);
+        // Higher damage if we're blocking a longer sequence
+        damage += seqLength;
+      }
+    }
+  }
+
+  return damage;
+}
+
+function getProductivePlacementCells(card, grid, validCells) {
+  return validCells.filter(cellIndex => {
+    if (grid.every(cell => cell === null)) return true;
+    const matches = getMatchingNeighbors(card, grid, cellIndex);
+    return matches.habitat.length > 0 || matches.diet.length > 0;
+  });
+}
+
+function evaluateCardForDraft(card, grid) {
+  const validCells = getValidPlacementCells(grid);
+  if (validCells.length === 0) return 0;
+
+  const productiveCells = getProductivePlacementCells(card, grid, validCells);
+  if (productiveCells.length === 0) return 0;
+
+  const currentScore = calculateRunScore(grid).total;
+  let bestDelta = -Infinity;
+
+  for (const cellIndex of productiveCells) {
+    const testGrid = [...grid];
+    testGrid[cellIndex] = card;
+    const newScore = calculateRunScore(testGrid).total;
+    const delta = newScore - currentScore;
+    bestDelta = Math.max(bestDelta, delta);
+  }
+
+  return bestDelta;
+}
+
 export function basicDraft(gameState) {
   const market = gameState.market;
   const player = gameState.players[gameState.currentPlayerIndex];
@@ -73,7 +190,7 @@ export function basicDraft(gameState) {
   let bestScore = -Infinity;
 
   for (let i = 0; i < market.length; i++) {
-    const score = scoreCard(market[i], grid);
+    const score = evaluateCardForDraft(market[i], grid);
     if (score > bestScore) {
       bestScore = score;
       bestIndex = i;
@@ -83,34 +200,47 @@ export function basicDraft(gameState) {
   return bestIndex;
 }
 
-// Placement strategy: pick the cell that maximizes score delta
 export function basicPlace(gameState, validCells) {
   const player = gameState.players[gameState.currentPlayerIndex];
   const grid = player.grid;
   const card = gameState.pendingCard;
+  const currentScore = calculateRunScore(grid).total;
 
   if (!card || validCells.length === 0) {
     throw new Error('Invalid placement state');
   }
 
-  // Calculate current score
-  const currentScore = calculateRunScore(grid).total;
+  const productiveCells = getProductivePlacementCells(card, grid, validCells);
 
+  // If we have productive placements, prioritize score
+  if (productiveCells.length > 0) {
+    let bestCell = productiveCells[0];
+    let bestDelta = -Infinity;
+
+    for (const cellIndex of productiveCells) {
+      const testGrid = [...grid];
+      testGrid[cellIndex] = card;
+      const newScore = calculateRunScore(testGrid).total;
+      const delta = newScore - currentScore;
+
+      if (delta > bestDelta || (delta === bestDelta && cellIndex < bestCell)) {
+        bestDelta = delta;
+        bestCell = cellIndex;
+      }
+    }
+
+    return bestCell;
+  }
+
+  // No productive placements: pick the least damaging spot
   let bestCell = validCells[0];
-  let bestDelta = -Infinity;
+  let leastDamage = Infinity;
 
   for (const cellIndex of validCells) {
-    // Simulate placement
-    const testGrid = [...grid];
-    testGrid[cellIndex] = card;
+    const damage = calculatePlacementDamage(card, grid, cellIndex);
 
-    // Calculate new score
-    const newScore = calculateRunScore(testGrid).total;
-    const delta = newScore - currentScore;
-
-    // Tiebreak: prefer placing earlier in grid (top-left)
-    if (delta > bestDelta || (delta === bestDelta && cellIndex < bestCell)) {
-      bestDelta = delta;
+    if (damage < leastDamage || (damage === leastDamage && cellIndex < bestCell)) {
+      leastDamage = damage;
       bestCell = cellIndex;
     }
   }

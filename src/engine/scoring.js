@@ -19,15 +19,33 @@ function rowColToIndex(row, col) {
   return row * 6 + col;
 }
 
-// Check if two cards can be part of the same run (both share symbol or one is WILD)
-function symbolsMatch(card1Symbol, card2Symbol) {
-  if (!card1Symbol || !card2Symbol) return false;
-  if (card1Symbol === 'WILD' || card2Symbol === 'WILD') return true;
-  return card1Symbol === card2Symbol;
+// Helper: get symbol from card (handles both Australian/British and London Travel decks)
+function getHabitatSymbol(card) {
+  if (!card) return null;
+  return card.habitat !== undefined ? card.habitat : card.location;
+}
+
+function getDietSymbol(card) {
+  if (!card) return null;
+  return card.diet !== undefined ? card.diet : card.category;
+}
+
+// Check if two symbols can be part of the same run (both match or one is WILD)
+// WILD only matches within its own category (habitat WILD matches habitats, diet WILD matches diets)
+// WILD does NOT match other WILD cards
+function symbolsMatch(symbol1, symbol2) {
+  if (!symbol1 || !symbol2) return false;
+  // WILD doesn't match WILD
+  if (symbol1 === 'WILD' && symbol2 === 'WILD') return false;
+  // WILD matches any non-WILD symbol in its category
+  if (symbol1 === 'WILD' || symbol2 === 'WILD') return true;
+  // Otherwise, symbols must be exactly equal
+  return symbol1 === symbol2;
 }
 
 // Find all runs of 4+ in a line of cards
 // Returns array of { startIdx, length } where length >= 4
+// A run must have at least one non-WILD card to be valid
 function findRunsInLine(cards) {
   const runs = [];
   let currentRun = null;
@@ -59,16 +77,23 @@ function findRunsInLine(cards) {
     runs.push(currentRun);
   }
 
-  return runs;
+  // Filter out runs that are only WILD cards (no concrete symbol)
+  return runs.filter(run => run.symbol !== 'WILD');
 }
 
 // Score a single line (row or column) by one symbol type
 // Returns total points for runs in that line
+// Handles both Australian/British (habitat/diet) and London Travel (location/category) decks
 function scoreLineBySymbol(grid, line, symbolType) {
   const cards = line.map(idx => {
     const card = getCardAt(grid, idx);
     if (!card) return null;
-    return symbolType === 'habitat' ? card.habitat : card.diet;
+    // Support both Australian/British (habitat/diet) and London Travel (location/category)
+    if (symbolType === 'habitat') {
+      return card.habitat !== undefined ? card.habitat : card.location;
+    } else {
+      return card.diet !== undefined ? card.diet : card.category;
+    }
   });
 
   const runs = findRunsInLine(cards);
@@ -79,6 +104,7 @@ function scoreLineBySymbol(grid, line, symbolType) {
 export function calculateRunScore(grid) {
   let habitatScore = 0;
   let dietScore = 0;
+  const runs = [];  // Track all runs for debugging
 
   // Score each row (5 rows, 6 cells wide)
   for (let row = 0; row < 5; row++) {
@@ -86,8 +112,24 @@ export function calculateRunScore(grid) {
     for (let col = 0; col < 6; col++) {
       rowIndices.push(rowColToIndex(row, col));
     }
-    habitatScore += scoreLineBySymbol(grid, rowIndices, 'habitat');
-    dietScore += scoreLineBySymbol(grid, rowIndices, 'diet');
+
+    // Check habitat runs
+    const habitatCards = rowIndices.map(idx => getHabitatSymbol(getCardAt(grid, idx)));
+    const habitatRuns = findRunsInLine(habitatCards);
+    for (const run of habitatRuns) {
+      const cells = rowIndices.slice(run.startIdx, run.startIdx + run.length);
+      runs.push({ type: 'habitat', line: `row ${row}`, cells, symbol: run.symbol, length: run.length });
+      habitatScore += (run.length - 3);
+    }
+
+    // Check diet runs
+    const dietCards = rowIndices.map(idx => getDietSymbol(getCardAt(grid, idx)));
+    const dietRuns = findRunsInLine(dietCards);
+    for (const run of dietRuns) {
+      const cells = rowIndices.slice(run.startIdx, run.startIdx + run.length);
+      runs.push({ type: 'diet', line: `row ${row}`, cells, symbol: run.symbol, length: run.length });
+      dietScore += (run.length - 3);
+    }
   }
 
   // Score each column (6 columns, 5 cells tall)
@@ -96,8 +138,24 @@ export function calculateRunScore(grid) {
     for (let row = 0; row < 5; row++) {
       colIndices.push(rowColToIndex(row, col));
     }
-    habitatScore += scoreLineBySymbol(grid, colIndices, 'habitat');
-    dietScore += scoreLineBySymbol(grid, colIndices, 'diet');
+
+    // Check habitat runs
+    const habitatCards = colIndices.map(idx => getHabitatSymbol(getCardAt(grid, idx)));
+    const habitatRuns = findRunsInLine(habitatCards);
+    for (const run of habitatRuns) {
+      const cells = colIndices.slice(run.startIdx, run.startIdx + run.length);
+      runs.push({ type: 'habitat', line: `col ${col}`, cells, symbol: run.symbol, length: run.length });
+      habitatScore += (run.length - 3);
+    }
+
+    // Check diet runs
+    const dietCards = colIndices.map(idx => getDietSymbol(getCardAt(grid, idx)));
+    const dietRuns = findRunsInLine(dietCards);
+    for (const run of dietRuns) {
+      const cells = colIndices.slice(run.startIdx, run.startIdx + run.length);
+      runs.push({ type: 'diet', line: `col ${col}`, cells, symbol: run.symbol, length: run.length });
+      dietScore += (run.length - 3);
+    }
   }
 
   return {
@@ -160,7 +218,7 @@ export function getHighlightedCells(grid) {
     }
 
     // Check habitat runs
-    const habitatCards = rowIndices.map(idx => getCardAt(grid, idx)?.habitat || null);
+    const habitatCards = rowIndices.map(idx => getHabitatSymbol(getCardAt(grid, idx)));
     const habitatRuns = findRunsInLine(habitatCards);
     for (const run of habitatRuns) {
       for (let i = 0; i < run.length; i++) {
@@ -171,7 +229,7 @@ export function getHighlightedCells(grid) {
     }
 
     // Check diet runs
-    const dietCards = rowIndices.map(idx => getCardAt(grid, idx)?.diet || null);
+    const dietCards = rowIndices.map(idx => getDietSymbol(getCardAt(grid, idx)));
     const dietRuns = findRunsInLine(dietCards);
     for (const run of dietRuns) {
       for (let i = 0; i < run.length; i++) {
@@ -190,7 +248,7 @@ export function getHighlightedCells(grid) {
     }
 
     // Check habitat runs
-    const habitatCards = colIndices.map(idx => getCardAt(grid, idx)?.habitat || null);
+    const habitatCards = colIndices.map(idx => getHabitatSymbol(getCardAt(grid, idx)));
     const habitatRuns = findRunsInLine(habitatCards);
     for (const run of habitatRuns) {
       for (let i = 0; i < run.length; i++) {
@@ -201,7 +259,7 @@ export function getHighlightedCells(grid) {
     }
 
     // Check diet runs
-    const dietCards = colIndices.map(idx => getCardAt(grid, idx)?.diet || null);
+    const dietCards = colIndices.map(idx => getDietSymbol(getCardAt(grid, idx)));
     const dietRuns = findRunsInLine(dietCards);
     for (const run of dietRuns) {
       for (let i = 0; i < run.length; i++) {

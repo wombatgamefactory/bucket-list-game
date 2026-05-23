@@ -4,6 +4,6 @@
   "description": "Bucket List: Australian Birds — play online",
   "type": "module",
   "scripts": {
-    "dev": "npx http-server -p 8080 -c-1"
+    "dev": "npx http-server -p 9000 -c-1"
   }
 }

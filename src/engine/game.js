@@ -1,18 +1,28 @@
 // Bucket List: Game Engine
 // Pure game state and rules (no DOM, fully testable)
 
-import { AUSTRALIAN_BIRDS, HABITATS, DIETS } from './cards.js';
+import { AUSTRALIAN_BIRDS, BRITISH_BIRDS, LONDON_TRAVEL, HABITATS, DIETS } from './cards.js';
 import { calculateRunScore, calculateFieldNotesScore } from './scoring.js';
 
 // Create and initialize a new game
-export function createGame(playerConfigs, fieldNotesCount = 0) {
+export function createGame(playerConfigs, fieldNotesCount = 0, deckType = 'australian') {
   // Validate input
   if (playerConfigs.length < 1 || playerConfigs.length > 4) {
     throw new Error('Game requires 1-4 players');
   }
 
+  // Select deck
+  let BIRDS;
+  if (deckType === 'british') {
+    BIRDS = BRITISH_BIRDS;
+  } else if (deckType === 'london') {
+    BIRDS = LONDON_TRAVEL;
+  } else {
+    BIRDS = AUSTRALIAN_BIRDS;
+  }
+
   // Build the card deck: exactly 20 cards per player
-  const deck = [...AUSTRALIAN_BIRDS].sort(() => Math.random() - 0.5);
+  const deck = [...BIRDS].sort(() => Math.random() - 0.5);
   const deckSize = 20 * playerConfigs.length;
   const gameDeck = deck.slice(0, deckSize);
 
@@ -50,6 +60,7 @@ export function createGame(playerConfigs, fieldNotesCount = 0) {
     turnsCompleted: 0,
     totalTurns: 20,
     pendingCard: null,
+    deckType,
     fieldNotes: {
       enabled: fieldNotesCount > 0,
       tickedCardIds,

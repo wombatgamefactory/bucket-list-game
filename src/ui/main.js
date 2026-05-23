@@ -5,11 +5,46 @@ import { createGame, draftCard, placeCard, refreshMarket, getValidPlacementCells
 import { renderSetupScreen, renderGameScreen, renderEndScreen, updateMarketDisplay, updateGridDisplay, updateScoreDisplay, updateDeckInfo } from './board.js';
 import { randomDraft, randomPlace } from '../bots/randomBot.js';
 import { basicDraft, basicPlace } from '../bots/basicBot.js';
+import { hardDraft, hardPlace } from '../bots/hardBot.js';
+import { expertDraft, expertPlace } from '../bots/expertBot.js';
+import { strategicDraft, strategicPlace } from '../bots/strategicBot.js';
 
 const app = document.getElementById('app');
 let gameState = null;
 let undoStack = [];
 let gameStartTime = null;
+
+// Processing time in ms for each difficulty (each doubles)
+const PROCESSING_TIMES = {
+  'easy': 800,
+  'medium': 1600,
+  'hard': 3200,
+  'expert': 6400,
+  'strategic': 4800,
+};
+
+function getProcessingTime(difficulty) {
+  return PROCESSING_TIMES[difficulty] || 1000;
+}
+
+// Helper function to restore Sets after JSON deserialization
+function restoreGameState(state) {
+  if (state && state.fieldNotes && state.fieldNotes.tickedCardIds) {
+    const tickedIds = state.fieldNotes.tickedCardIds;
+    // Convert whatever format it is (array, object, or Set) into a Set
+    if (tickedIds instanceof Set) {
+      // Already a Set, no conversion needed
+      return state;
+    } else if (Array.isArray(tickedIds)) {
+      // It's an array, convert to Set
+      state.fieldNotes.tickedCardIds = new Set(tickedIds);
+    } else if (typeof tickedIds === 'object' && tickedIds !== null) {
+      // It's an object (from JSON), extract the values as an array
+      state.fieldNotes.tickedCardIds = new Set(Object.values(tickedIds));
+    }
+  }
+  return state;
+}
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Game start handler
 function onGameStart(config) {
-  gameState = createGame(config.playerConfigs, config.fieldNotesCount);
+  gameState = createGame(config.playerConfigs, config.fieldNotesCount, config.deck || 'australian');
   gameStartTime = Date.now();
 
   // Fire analytics event
@@ -27,15 +62,69 @@ function onGameStart(config) {
     ai_players: config.playerConfigs.filter(p => !p.isHuman).length,
     ai_difficulties: config.playerConfigs.filter(p => !p.isHuman).map(p => p.aiDifficulty).join(','),
     field_notes_enabled: config.fieldNotesCount > 0,
+    deck: config.deck || 'australian',
   });
 
   startGameLoop();
+}
+
+// Helper: save scroll positions of all scrollable elements in player areas
+function saveScrollPositions() {
+  const positions = {};
+  // Check all player cells for any scrollable elements
+  for (let i = 0; i < 4; i++) {
+    const playerCell = document.getElementById(`playerCell${i}`);
+    if (!playerCell) continue;
+
+    // Save the player cell's scroll position
+    if (playerCell.scrollLeft > 0 || playerCell.scrollTop > 0) {
+      positions[`playerCell${i}`] = {
+        scrollLeft: playerCell.scrollLeft,
+        scrollTop: playerCell.scrollTop
+      };
+      console.log(`Saved playerCell${i} scroll:`, positions[`playerCell${i}`]);
+    }
+
+    // Also check for any grid elements that might be scrolling
+    const grid = playerCell.querySelector('.bl-grid');
+    if (grid && (grid.scrollLeft > 0 || grid.scrollTop > 0)) {
+      positions[`grid${i}`] = {
+        scrollLeft: grid.scrollLeft,
+        scrollTop: grid.scrollTop
+      };
+      console.log(`Saved grid${i} scroll:`, positions[`grid${i}`]);
+    }
+  }
+  return positions;
+}
+
+// Helper: restore scroll positions after re-render
+function restoreScrollPositions(positions) {
+  for (const [key, scroll] of Object.entries(positions)) {
+    let element;
+
+    if (key.startsWith('playerCell')) {
+      element = document.getElementById(key);
+    } else if (key.startsWith('grid')) {
+      const cellIndex = key.replace('grid', '');
+      const playerCell = document.getElementById(`playerCell${cellIndex}`);
+      element = playerCell ? playerCell.querySelector('.bl-grid') : null;
+    }
+
+    if (element) {
+      element.scrollLeft = scroll.scrollLeft;
+      element.scrollTop = scroll.scrollTop;
+      console.log(`Restored ${key} scroll to:`, scroll);
+    }
+  }
 }
 
 // Main game loop
 function startGameLoop() {
   function updateDisplay() {
     const container = app;
+    const scrollPositions = saveScrollPositions();
+
     if (gameState.gamePhase === 'gameover') {
       renderEndScreen(container, gameState, onRematch);
     } else {
@@ -44,11 +133,55 @@ function startGameLoop() {
         onPlaceCard: onHumanPlace,
         getValidPlacementCells: () => getValidPlacementCells(gameState),
         onRefreshMarket: onHumanRefreshMarket,
+        onCancel: onHumanCancel,
       });
     }
+
+    // Restore scroll position - use multiple attempts to ensure it sticks
+    requestAnimationFrame(() => {
+      restoreScrollPositions(scrollPositions);
+      // Set again after a short delay to ensure it persists
+      setTimeout(() => {
+        restoreScrollPositions(scrollPositions);
+      }, 10);
+    });
   }
 
   updateDisplay();
+
+  function showProcessingIndicator(difficulty) {
+    const processingTime = getProcessingTime(difficulty);
+    const startTime = Date.now();
+
+    return new Promise(resolve => {
+      const updateProgress = () => {
+        const indicator = app.querySelector('#processingIndicator');
+        const progressFill = app.querySelector('#progressFill');
+        const progressPercent = app.querySelector('#progressPercent');
+
+        if (indicator && progressFill && progressPercent) {
+          indicator.style.display = 'block';
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(100, (elapsed / processingTime) * 100);
+          progressFill.style.width = progress + '%';
+          progressPercent.textContent = Math.floor(progress);
+        }
+
+        const elapsed = Date.now() - startTime;
+        if (elapsed >= processingTime) {
+          const indicator = app.querySelector('#processingIndicator');
+          if (indicator) {
+            indicator.style.display = 'none';
+          }
+          resolve();
+        } else {
+          requestAnimationFrame(updateProgress);
+        }
+      };
+
+      updateProgress();
+    });
+  }
 
   async function autoPlayNextTurn() {
     while (!gameState.gameOver) {
@@ -67,25 +200,48 @@ function startGameLoop() {
 
       // Draft phase
       if (gameState.gamePhase === 'draft') {
-        const cardIndex = aiDifficulty === 'basic'
-          ? basicDraft(gameState)
-          : randomDraft(gameState);
+        const draftPromise = showProcessingIndicator(aiDifficulty);
+
+        let cardIndex;
+        if (aiDifficulty === 'strategic') {
+          cardIndex = strategicDraft(gameState);
+        } else if (aiDifficulty === 'expert') {
+          cardIndex = expertDraft(gameState);
+        } else if (aiDifficulty === 'hard') {
+          cardIndex = hardDraft(gameState);
+        } else if (aiDifficulty === 'medium') {
+          cardIndex = basicDraft(gameState);
+        } else {
+          cardIndex = randomDraft(gameState);
+        }
 
         draftCard(gameState, cardIndex);
         updateDisplay();
-        await new Promise(r => setTimeout(r, 800));
+        await draftPromise;
       }
 
       // Place phase
       if (gameState.gamePhase === 'place') {
+        const placePromise = showProcessingIndicator(aiDifficulty);
+
         const validCells = getValidPlacementCells(gameState);
-        const cellIndex = aiDifficulty === 'basic'
-          ? basicPlace(gameState, validCells)
-          : randomPlace(gameState, validCells);
+        let cellIndex;
+
+        if (aiDifficulty === 'strategic') {
+          cellIndex = strategicPlace(gameState, validCells);
+        } else if (aiDifficulty === 'expert') {
+          cellIndex = expertPlace(gameState, validCells);
+        } else if (aiDifficulty === 'hard') {
+          cellIndex = hardPlace(gameState, validCells);
+        } else if (aiDifficulty === 'medium') {
+          cellIndex = basicPlace(gameState, validCells);
+        } else {
+          cellIndex = randomPlace(gameState, validCells);
+        }
 
         placeCard(gameState, cellIndex);
         updateDisplay();
-        await new Promise(r => setTimeout(r, 600));
+        await placePromise;
       }
     }
 
@@ -157,6 +313,14 @@ function startGameLoop() {
     }
   }
 
+  function onHumanCancel() {
+    // Undo the draft action to go back to draft phase
+    if (undoStack.length > 0) {
+      gameState = restoreGameState(undoStack.pop());
+      updateDisplay();
+    }
+  }
+
   function onRematch() {
     renderSetupScreen(app, onGameStart);
   }
@@ -171,7 +335,7 @@ function pushUndoSnapshot() {
 
 function popUndoSnapshot() {
   if (undoStack.length === 0) return;
-  gameState = undoStack.pop();
+  gameState = restoreGameState(undoStack.pop());
   const container = app;
   renderGameScreen(container, gameState, {
     onDraftCard: () => {},
