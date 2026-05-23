@@ -1,0 +1,101 @@
+Card#,Version,Qty,Needed,Cardback,Discussion,Attraction Name,Short Description,Category A,Category B,Prominent Category,@icon1,@icon2,@icon3,@Image,@fact_bg,@centre_image,@check_box
+1,1,1,1,,,King Parrot,Males take 3 years to turn fully red,Rainforest,Seeds & Grain,,category_rainforest.png,category_seeds.png,,bird_king parrot.png,fact_bg.png,,check_box.png
+2,1,1,1,,,Double-eyed Fig-Parrot,Australia's smallest parrot at just 14cm,Rainforest,Seeds & Grain,,category_rainforest.png,category_seeds.png,,bird_double-eyed fig-parrot.png,fact_bg.png,,check_box.png
+3,1,1,1,,,Wompoo Pigeon,Can swallow whole fruits bigger than its head,Rainforest,Nectar & Fruit,,category_rainforest.png,category_fruit.png,,bird_wompoo pigeon.png,fact_bg.png,,check_box.png
+4,1,1,1,,,Regent Bowerbird,Mixes its own paint to decorate its bower,Rainforest,Nectar & Fruit,,category_rainforest.png,category_fruit.png,,bird_regent bowerbird.png,fact_bg.png,,check_box.png
+5,1,1,1,,,Noisy Pitta,Smashes snails on a favourite rock 'anvil',Rainforest,Insects & Invertebrates,,category_rainforest.png,category_insects.png,,bird_noisy pitta.png,fact_bg.png,,check_box.png
+6,1,1,1,,,Rufous Fantail,Fans its tail to startle insects into flight,Rainforest,Insects & Invertebrates,,category_rainforest.png,category_insects.png,,bird_rufous fantail.png,fact_bg.png,,check_box.png
+7,1,1,1,,,Azure Kingfisher,Beats fish against a branch before eating,Rainforest,Fish & Aquatic Prey,,category_rainforest.png,category_fish.png,,bird_azure kingfisher.png,fact_bg.png,,check_box.png
+8,1,1,1,,,Green Pygmy Goose,Not a goose at all — it's a tiny perching duck,Rainforest,Fish & Aquatic Prey,,category_rainforest.png,category_fish.png,,bird_green pygmy goose.png,fact_bg.png,,check_box.png
+9,1,1,1,,,Grey Goshawk,Australia's only pure white bird of prey,Rainforest,Meat & Carrion,,category_rainforest.png,category_carnivore.png,,bird_grey goshawk.png,fact_bg.png,,check_box.png
+10,1,1,1,,,Rufous Owl,Can catch possums and sugar gliders mid-air,Rainforest,Meat & Carrion,,category_rainforest.png,category_carnivore.png,,bird_rufous owl.png,fact_bg.png,,check_box.png
+11,1,1,1,,,Eastern Crimson Rosella,"Some populations are yellow, not crimson",Bushland & Scrub,Seeds & Grain,,category_scrub.png,category_seeds.png,,bird_eastern crimson rosella.png,fact_bg.png,,check_box.png
+12,1,1,1,,,Sulphur-crested Cockatoo,Can live over 80 years in captivity,Bushland & Scrub,Seeds & Grain,,category_scrub.png,category_seeds.png,,bird_sulphur-crested cockatoo.png,fact_bg.png,,check_box.png
+13,1,1,1,,,Scarlet Honeyeater,Weighs less than two teaspoons of sugar,Bushland & Scrub,Nectar & Fruit,,category_scrub.png,category_fruit.png,,bird_scarlet honeyeater.png,fact_bg.png,,check_box.png
+14,1,1,1,,,Rainbow Lorikeet,Has a brush-tipped tongue for licking nectar,Bushland & Scrub,Nectar & Fruit,,category_scrub.png,category_fruit.png,,bird_rainbow lorikeet.png,fact_bg.png,,check_box.png
+15,1,1,1,,,Splendid Fairywren,Males bring petals to females as courtship gifts,Bushland & Scrub,Insects & Invertebrates,,category_scrub.png,category_insects.png,,bird_splendid fairywren.png,fact_bg.png,,check_box.png
+16,1,1,1,,,Red-capped Robin,Can spot a moving insect from 40 metres away,Bushland & Scrub,Insects & Invertebrates,,category_scrub.png,category_insects.png,,bird_red-capped robin.png,fact_bg.png,,check_box.png
+17,1,1,1,,,Laughing Kookaburra,Its laugh marks territory at dawn and dusk,Bushland & Scrub,Fish & Aquatic Prey,,category_scrub.png,category_fish.png,,bird_laughing kookaburra.png,fact_bg.png,,check_box.png
+18,1,1,1,,,Sacred Kingfisher,Nests inside termite mounds in tree trunks,Bushland & Scrub,Fish & Aquatic Prey,,category_scrub.png,category_fish.png,,bird_sacred kingfisher.png,fact_bg.png,,check_box.png
+19,1,1,1,,,Powerful Owl,Roosts all day clutching last night's catch,Bushland & Scrub,Meat & Carrion,,category_scrub.png,category_carnivore.png,,bird_powerful owl.png,fact_bg.png,,check_box.png
+20,1,1,1,,,Barking Owl,Screaming call once mistaken for a woman,Bushland & Scrub,Meat & Carrion,,category_scrub.png,category_carnivore.png,,bird_barking owl.png,fact_bg.png,,check_box.png
+21,1,1,1,,,Black Swan,Once thought impossible — now WA's emblem,Wetlands & Waterways,Seeds & Grain,,category_wetlands.png,category_seeds.png,,bird_black swan.png,fact_bg.png,,check_box.png
+22,1,1,1,,,Magpie Goose,A living fossil with half-webbed feet,Wetlands & Waterways,Seeds & Grain,,category_wetlands.png,category_seeds.png,,bird_magpie goose.png,fact_bg.png,,check_box.png
+23,1,1,1,,,Spinebill,Can hover like a hummingbird at flowers,Wetlands & Waterways,Nectar & Fruit,,category_wetlands.png,category_fruit.png,,bird_spinebill.png,fact_bg.png,,check_box.png
+24,1,1,1,,,Lewin's Honeyeater,Named after a convict ship artist in 1801,Wetlands & Waterways,Nectar & Fruit,,category_wetlands.png,category_fruit.png,,bird_lewin's honeyeater.png,fact_bg.png,,check_box.png
+25,1,1,1,,,Rainbow Bee-eater,Rubs bee stings off on a branch before eating,Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_rainbow bee-eater.png,fact_bg.png,,check_box.png
+26,1,1,1,,,Royal Spoonbill,Sweeps its spoon-shaped bill side to side,Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_royal spoonbill.png,fact_bg.png,,check_box.png
+27,1,1,1,,,Nankeen Night Heron,"Hunts by moonlight, sleeps hidden by day",Wetlands & Waterways,Fish & Aquatic Prey,,category_wetlands.png,category_fish.png,,bird_nankeen night heron.png,fact_bg.png,,check_box.png
+28,1,1,1,,,Australian Pelican,Has the longest bill of any living bird,Wetlands & Waterways,Fish & Aquatic Prey,,category_wetlands.png,category_fish.png,,bird_australian pelican.png,fact_bg.png,,check_box.png
+29,1,1,1,,,Swamp Harrier,Passes food to its mate mid-flight,Wetlands & Waterways,Meat & Carrion,,category_wetlands.png,category_carnivore.png,,bird_swamp harrier.png,fact_bg.png,,check_box.png
+30,1,1,1,,,White-faced Heron,Vibrates its foot underwater to lure prey,Wetlands & Waterways,Meat & Carrion,,category_wetlands.png,category_carnivore.png,,bird_white-faced heron.png,fact_bg.png,,check_box.png
+31,1,1,1,,,Crested Pigeon,Its wings make a whistling alarm when it takes off,Coastal & Ocean,Seeds & Grain,,category_ocean.png,category_seeds.png,,bird_crested pigeon.png,fact_bg.png,,check_box.png
+32,1,1,1,,,Bush Stone-curlew,Freezes statue-still when threatened,Coastal & Ocean,Seeds & Grain,,category_ocean.png,category_seeds.png,,bird_bush stone-curlew.png,fact_bg.png,,check_box.png
+33,1,1,1,,,Noisy Friarbird,Bald black head earned it the name 'leatherhead',Coastal & Ocean,Nectar & Fruit,,category_ocean.png,category_fruit.png,,bird_noisy friarbird.png,fact_bg.png,,check_box.png
+34,1,1,1,,,Little Wattlebird,Named 'little' but is actually 30cm long,Coastal & Ocean,Nectar & Fruit,,category_ocean.png,category_fruit.png,,bird_little wattlebird.png,fact_bg.png,,check_box.png
+35,1,1,1,,,Sooty Oystercatcher,Uses its bill like a chisel on rock oysters,Coastal & Ocean,Insects & Invertebrates,,category_ocean.png,category_insects.png,,bird_sooty oystercatcher.png,fact_bg.png,,check_box.png
+36,1,1,1,,,Pied Oystercatcher,Chicks can swim within hours of hatching,Coastal & Ocean,Insects & Invertebrates,,category_ocean.png,category_insects.png,,bird_pied oystercatcher.png,fact_bg.png,,check_box.png
+37,1,1,1,,,White-bellied Sea Eagle,Mates lock talons and cartwheel through the sky,Coastal & Ocean,Fish & Aquatic Prey,,category_ocean.png,category_fish.png,,bird_white-bellied sea eagle.png,fact_bg.png,,check_box.png
+38,1,1,1,,,Australasian Gannet,Plunge-dives from 30 metres at 100 km/h,Coastal & Ocean,Fish & Aquatic Prey,,category_ocean.png,category_fish.png,,bird_australasian gannet.png,fact_bg.png,,check_box.png
+39,1,1,1,,,Brahminy Kite,Sacred in Hindu mythology as Vishnu's bird,Coastal & Ocean,Meat & Carrion,,category_ocean.png,category_carnivore.png,,bird_brahminy kite.png,fact_bg.png,,check_box.png
+40,1,1,1,,,Pacific Gull,Drops shellfish from height to crack them open,Coastal & Ocean,Meat & Carrion,,category_ocean.png,category_carnivore.png,,bird_pacific gull.png,fact_bg.png,,check_box.png
+41,1,1,1,,,Gouldian Finch,"Comes in red, black, or yellow-headed forms",Outback & Grassland,Seeds & Grain,,category_outback.png,category_seeds.png,,bird_gouldian finch.png,fact_bg.png,,check_box.png
+42,1,1,1,,,Princess Parrot,May vanish from an area for 20 years,Outback & Grassland,Seeds & Grain,,category_outback.png,category_seeds.png,,bird_princess parrot.png,fact_bg.png,,check_box.png
+43,1,1,1,,,Crimson Chat,Fakes a broken wing to lure predators away,Outback & Grassland,Nectar & Fruit,,category_outback.png,category_fruit.png,,bird_crimson chat.png,fact_bg.png,,check_box.png
+44,1,1,1,,,Pied Honeyeater,Performs a spectacular spiralling song flight,Outback & Grassland,Nectar & Fruit,,category_outback.png,category_fruit.png,,bird_pied honeyeater.png,fact_bg.png,,check_box.png
+45,1,1,1,,,Nankeen Kestrel,Hovers perfectly still in wind like a drone,Outback & Grassland,Insects & Invertebrates,,category_outback.png,category_insects.png,,bird_nankeen kestrel.png,fact_bg.png,,check_box.png
+46,1,1,1,,,Budgerigar,"Wild flocks can number over 10,000 birds",Outback & Grassland,Insects & Invertebrates,,category_outback.png,category_insects.png,,bird_budgerigar.png,fact_bg.png,,check_box.png
+47,1,1,1,,,Brolga,Famous for its elaborate courtship dance,Outback & Grassland,Fish & Aquatic Prey,,category_outback.png,category_fish.png,,bird_brolga.png,fact_bg.png,,check_box.png
+48,1,1,1,,,Black-necked Stork,Australia's only stork — often called Jabiru,Outback & Grassland,Fish & Aquatic Prey,,category_outback.png,category_fish.png,,bird_black-necked stork.png,fact_bg.png,,check_box.png
+49,1,1,1,,,Wedge-tailed Eagle,2.3m wingspan — can soar for hours unseen,Outback & Grassland,Meat & Carrion,,category_outback.png,category_carnivore.png,,bird_wedge-tailed eagle.png,fact_bg.png,,check_box.png
+50,1,1,1,,,Crow,Can solve multi-step puzzles for food,Outback & Grassland,Meat & Carrion,,category_outback.png,category_carnivore.png,,bird_crow.png,fact_bg.png,,check_box.png
+51,1,1,1,,,Southern Cassowary,Its kick can be lethal to humans,Rainforest,WILD,,category_rainforest.png,category_wild.png,,bird_southern cassowary.png,fact_bg.png,,check_box.png
+52,1,1,1,,,Superb Lyrebird,"Can mimic chainsaws, cameras, and car alarms",Bushland & Scrub,WILD,,category_scrub.png,category_wild.png,,bird_superb lyrebird.png,fact_bg.png,,check_box.png
+53,1,1,1,,,Purple Swamphen,Holds food in one foot like a hand to eat,Wetlands & Waterways,WILD,,category_wetlands.png,category_wild.png,,bird_purple swamphen.png,fact_bg.png,,check_box.png
+54,1,1,1,,,Little Penguin,World's smallest penguin at just 33cm tall,Coastal & Ocean,WILD,,category_ocean.png,category_wild.png,,bird_little penguin.png,fact_bg.png,,check_box.png
+55,1,1,1,,,Emu,Dad sits on the eggs and raises chicks alone,Outback & Grassland,WILD,,category_outback.png,category_wild.png,,bird_emu.png,fact_bg.png,,check_box.png
+56,1,1,1,,,Galah,Aussie slang for a fool is named after it,WILD,Seeds & Grain,,category_wild.png,category_seeds.png,,bird_galah.png,fact_bg.png,,check_box.png
+57,1,1,1,,,Figbird,Males have bright red bare skin around eyes,WILD,Nectar & Fruit,,category_wild.png,category_fruit.png,,bird_figbird.png,fact_bg.png,,check_box.png
+58,1,1,1,,,Satin Bowerbird,Obsessively collects anything blue for its bower,WILD,Insects & Invertebrates,,category_wild.png,category_insects.png,,bird_satin bowerbird.png,fact_bg.png,,check_box.png
+59,1,1,1,,,Darter,Swims with only its snake-like neck showing,WILD,Fish & Aquatic Prey,,category_wild.png,category_fish.png,,bird_darter.png,fact_bg.png,,check_box.png
+60,1,1,1,,,Peregrine Falcon,Fastest animal on Earth at 390 km/h,WILD,Meat & Carrion,,category_wild.png,category_carnivore.png,,bird_peregrine falcon.png,fact_bg.png,,check_box.png
+61,1,1,1,,,Crimson Finch,One of the few finches that nests near crocs,Wetlands & Waterways,Seeds & Grain,,category_wetlands.png,category_seeds.png,,bird_crimson finch.png,fact_bg.png,,check_box.png
+62,1,1,1,,,Currawong,Its name mimics its ringing curra-wong call,Bushland & Scrub,Meat & Carrion,,category_scrub.png,category_carnivore.png,,bird_currawong.png,fact_bg.png,,check_box.png
+63,1,1,1,,,Tawny Frogmouth,Not an owl — it catches prey with its beak,Bushland & Scrub,Insects & Invertebrates,,category_scrub.png,category_insects.png,,bird_tawny frogmouth.png,fact_bg.png,,check_box.png
+64,1,1,1,,,Osprey,Has reversible toes for gripping slippery fish,Coastal & Ocean,Fish & Aquatic Prey,,category_ocean.png,category_fish.png,,bird_osprey.png,fact_bg.png,,check_box.png
+65,1,1,1,,x,Rose-crowned Fruit-Dove,So well-camouflaged it's usually heard first,Rainforest,Nectar & Fruit,,category_rainforest.png,category_fruit.png,,bird_rose-crowned fruit-dove.png,fact_bg.png,,check_box.png
+66,1,1,1,,,Masked Lapwing,Has hidden spurs on its wings for combat,Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_masked lapwing.png,fact_bg.png,,check_box.png
+67,1,1,1,,,Yellow-tailed Cockatoo,Rips bark off trees to find hidden grubs,Bushland & Scrub,Seeds & Grain,,category_scrub.png,category_seeds.png,,bird_yellow-tailed cockatoo.png,fact_bg.png,,check_box.png
+68,1,1,1,,,Superb Fruit-Dove,Male's purple crown glows in dappled light,Rainforest,Nectar & Fruit,,category_rainforest.png,category_fruit.png,,bird_superb fruit-dove.png,fact_bg.png,,check_box.png
+69,1,1,1,,x,Buff-banded Rail,Sneaks through reeds almost never taking flight,Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_buff-banded rail.png,fact_bg.png,,check_box.png
+70,1,1,1,,,Australian Hobby,Catches dragonflies and eats them on the wing,Outback & Grassland,Meat & Carrion,,category_outback.png,category_carnivore.png,,bird_australian hobby.png,fact_bg.png,,check_box.png
+71,1,1,1,,Print,Catbird,Named for its wailing cat-like call,Rainforest,Seeds & Grain,,category_rainforest.png,category_seeds.png,,bird_catbird.png,fact_bg.png,,check_box.png
+72,1,1,1,,Print,Mistletoebird,Spreads mistletoe by wiping seeds on branches,Rainforest,Nectar & Fruit,,category_rainforest.png,category_fruit.png,,bird_mistletoebird.png,fact_bg.png,,check_box.png
+73,1,1,1,,Print,Pheasant Coucal,Only Australian cuckoo that raises its own young,Rainforest,Insects & Invertebrates,,category_rainforest.png,category_insects.png,,bird_pheasant coucal.png,fact_bg.png,,check_box.png
+74,1,1,1,,Print,Egret,Grows long lacy plumes just for breeding season,Rainforest,Fish & Aquatic Prey,,category_rainforest.png,category_fish.png,,bird_egret.png,fact_bg.png,,check_box.png
+75,1,1,1,,Print,Boobook Owl,Australia's smallest owl calls its own name,Rainforest,Meat & Carrion,,category_rainforest.png,category_carnivore.png,,bird_boobook owl.png,fact_bg.png,,check_box.png
+76,1,1,1,,Print,Cockatiel,Only cockatoo small enough to perch on grass,Bushland & Scrub,Seeds & Grain,,category_scrub.png,category_seeds.png,,bird_cockatiel.png,fact_bg.png,,check_box.png
+77,1,1,1,,Print,Scaly-breasted Lorikeet,Almost invisible until it opens its red bill,Bushland & Scrub,Nectar & Fruit,,category_scrub.png,category_fruit.png,,bird_scaly-breasted lorikeet.png,fact_bg.png,,check_box.png
+78,1,1,1,,Print,Regent Honeyeater,So rare it's forgetting its own species' song,Bushland & Scrub,Nectar & Fruit,,category_scrub.png,category_fruit.png,,bird_regent honeyeater.png,fact_bg.png,,check_box.png
+79,1,1,1,,Print,Noisy Miner,Gangs up to mob birds ten times its size,Bushland & Scrub,Insects & Invertebrates,,category_scrub.png,category_insects.png,,bird_noisy miner.png,fact_bg.png,,check_box.png
+80,1,1,1,,Print,Dollarbird,Named for the silver coin shape in its wings,Bushland & Scrub,Fish & Aquatic Prey,,category_scrub.png,category_fish.png,,bird_dollarbird.png,fact_bg.png,,check_box.png
+81,1,1,1,,Print,Grey Butcherbird,Wedges prey in tree forks like a larder,Bushland & Scrub,Meat & Carrion,,category_scrub.png,category_carnivore.png,,bird_grey butcherbird.png,fact_bg.png,,check_box.png
+82,1,1,1,,Print,Coot,Builds a floating nest anchored to reeds,Wetlands & Waterways,Seeds & Grain,,category_wetlands.png,category_seeds.png,,bird_coot.png,fact_bg.png,,check_box.png
+83,1,1,1,,Print,Sahul Sunbird,Australia's only sunbird — tiny and iridescent,Wetlands & Waterways,Nectar & Fruit,,category_wetlands.png,category_fruit.png,,bird_sahul sunbird.png,fact_bg.png,,check_box.png
+84,1,1,1,,Print,Ibis,"Revered in ancient Egypt, beloved as the Bin Chicken",Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_ibis.png,fact_bg.png,,check_box.png
+85,1,1,1,,Print,Jacana,Walks on lily pads with enormous spread toes,Wetlands & Waterways,Insects & Invertebrates,,category_wetlands.png,category_insects.png,,bird_jacana.png,fact_bg.png,,check_box.png
+86,1,1,1,,Print,Curlew,Its eerie wail carries a kilometre at night,Wetlands & Waterways,Fish & Aquatic Prey,,category_wetlands.png,category_fish.png,,bird_curlew.png,fact_bg.png,,check_box.png
+87,1,1,1,,Print,Chough,Builds a mud bowl nest glued to a branch,Wetlands & Waterways,Meat & Carrion,,category_wetlands.png,category_carnivore.png,,bird_chough.png,fact_bg.png,,check_box.png
+88,1,1,1,,Print,Pale-headed Rosella,Head colour ranges from cream to bright yellow,Coastal & Ocean,Seeds & Grain,,category_ocean.png,category_seeds.png,,bird_pale-headed rosella.png,fact_bg.png,,check_box.png
+89,1,1,1,,Print,Channel-billed Cuckoo,World's largest parasitic bird at 60cm long,Coastal & Ocean,Nectar & Fruit,,category_ocean.png,category_fruit.png,,bird_channel-billed cuckoo.png,fact_bg.png,,check_box.png
+90,1,1,1,,Print,Avocet,Sweeps its upturned bill through shallow water,Coastal & Ocean,Insects & Invertebrates,,category_ocean.png,category_insects.png,,bird_avocet.png,fact_bg.png,,check_box.png
+91,1,1,1,,Print,Fairy Martin,Builds bottle-shaped mud nests under bridges,Coastal & Ocean,Insects & Invertebrates,,category_ocean.png,category_insects.png,,bird_fairy martin.png,fact_bg.png,,check_box.png
+92,1,1,1,,Print,Booby,Named by sailors for being too trusting,Coastal & Ocean,Fish & Aquatic Prey,,category_ocean.png,category_fish.png,,bird_booby.png,fact_bg.png,,check_box.png
+93,1,1,1,,Print,Frigatebird,Pirates food from other seabirds in mid-air,Coastal & Ocean,Meat & Carrion,,category_ocean.png,category_carnivore.png,,bird_frigatebird.png,fact_bg.png,,check_box.png
+94,1,1,1,,Print,Corella,Digs up roots and bulbs with its stubby bill,Outback & Grassland,Seeds & Grain,,category_outback.png,category_seeds.png,,bird_corella.png,fact_bg.png,,check_box.png
+95,1,1,1,,Print,Paradise Parrot,Last confirmed sighting was in 1927,Outback & Grassland,Seeds & Grain,,category_outback.png,category_seeds.png,,bird_paradise parrot.png,fact_bg.png,,check_box.png
+96,1,1,1,,Print,Green Oriole,Its song sounds like bubbling tropical water,Outback & Grassland,Nectar & Fruit,,category_outback.png,category_fruit.png,,bird_green oriole.png,fact_bg.png,,check_box.png
+97,1,1,1,,Print,Apostlebird,Named because flocks were said to number twelve,Outback & Grassland,Insects & Invertebrates,,category_outback.png,category_insects.png,,bird_apostlebird.png,fact_bg.png,,check_box.png
+98,1,1,1,,Print,Bustard,Australia's heaviest flying bird at up to 15kg,Outback & Grassland,Fish & Aquatic Prey,,category_outback.png,category_fish.png,,bird_bustard.png,fact_bg.png,,check_box.png
+99,1,1,1,,Print,Magpie,Can recognise over 100 different human faces,Outback & Grassland,Meat & Carrion,,category_outback.png,category_carnivore.png,,bird_magpie.png,fact_bg.png,,check_box.png
+100,1,1,1,,Print,Brush Turkey,Builds a compost mound up to 4 metres wide,Outback & Grassland,Meat & Carrion,,category_outback.png,category_carnivore.png,,bird_brush turkey.png,fact_bg.png,,check_box.png

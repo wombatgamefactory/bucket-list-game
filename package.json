@@ -1,0 +1,9 @@
+{
+  "name": "bucket-list-game",
+  "version": "1.0.0",
+  "description": "Bucket List: Australian Birds — play online",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -p 8080 -c-1"
+  }
+}
