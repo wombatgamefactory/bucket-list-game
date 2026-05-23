@@ -13,9 +13,7 @@ A browser-playable version of the tabletop card game **Bucket List: Australian B
 
 ## Play Online
 
-🎮 **[Play now on GitHub Pages](https://cardboard-gaming.github.io/bucket-list-game/)**
-
-(Note: Update the GitHub Pages URL once the repo is deployed)
+🎮 **[Play now on GitHub Pages](https://wombatgamefactory.github.io/bucket-list-game/)**
 
 ## Development
 
@@ -64,28 +62,6 @@ src/
 ```
 
 **Design principle:** Game engine is pure (no DOM, fully testable). UI layer is separate (reads state, fires events).
-
-## Deployment to GitHub Pages
-
-```bash
-# Configure your repo
-git remote add origin https://github.com/YOUR_ORG/bucket-list-game.git
-git branch -M main
-
-# Commit and push
-git add .
-git commit -m "Initial Bucket List web game
-
-Add complete game engine, UI, and AI bots for Bucket List: Australian Birds.
-Includes: card drafting, grid building, run scoring, Field Notes variant,
-responsive design, and both random and heuristic AI opponents."
-
-git push -u origin main
-
-# Enable GitHub Pages in repo settings:
-# Settings > Pages > Deploy from a branch > main > / (root)
-# Your game will be live at: https://YOUR_ORG.github.io/bucket-list-game/
-```
 
 ## Customization
 
