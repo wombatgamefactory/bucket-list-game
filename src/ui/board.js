@@ -26,60 +26,113 @@ export function renderSetupScreen(container, onStart) {
   };
 
   const DECKS = [
-    { id: 'australian', name: 'Australian Birds', image: 'images/bucket_list_card_back_australian_birds.png' },
-    { id: 'british', name: 'British Birds', image: 'images/bucket_list_card_back_british_birds.png' },
-    { id: 'london', name: 'London Travel', image: 'images/bucket_list_card_back_london_travel.png' },
+    {
+      id: 'australian',
+      name: 'Australian Birds',
+      image: 'images/bucket_list_card_back_australian_birds.png',
+      alt: 'Bucket List: Australian Birds — lorikeets, a galah, a cockatoo and a kookaburra among flowering eucalyptus',
+      tagline: 'From rainforest to reef — collect them all.',
+    },
+    {
+      id: 'british',
+      name: 'British Birds',
+      image: 'images/bucket_list_card_back_british_birds.png',
+      alt: 'Bucket List: British Birds — a robin, puffin, kingfisher and pheasant in a bluebell woodland',
+      tagline: 'From hedgerow to headland — collect them all.',
+    },
+    {
+      id: 'london',
+      name: 'London Travel',
+      image: 'images/bucket_list_card_back_london_travel.png',
+      alt: 'Bucket List: London — Tower Bridge, Big Ben, a Beefeater and a red double-decker bus',
+      tagline: 'From Tower to Tube — tick them all off.',
+    },
   ];
 
   container.innerHTML = `
     <div class="bl-screen bl-setup-screen">
-      <div class="bl-setup-form">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <h1>🐦 Bucket List</h1>
-          <button class="btn btn-secondary btn-small" id="rulesButton">📖 Rules</button>
+      <div class="bl-landing">
+
+        <header class="bl-hero">
+          <img class="bl-hero__art" id="heroArt"
+               src="${DECKS[0].image}" alt="${DECKS[0].alt}">
+          <p class="bl-hero__tagline" id="heroTagline">${DECKS[0].tagline}</p>
+        </header>
+
+        <ul class="bl-facts">
+          <li><strong>1&ndash;5</strong><span>Players</span></li>
+          <li><strong>20&ndash;30</strong><span>Minutes</span></li>
+          <li><strong>1.7</strong><span>Weight</span></li>
+          <li><strong>8+</strong><span>Age</span></li>
+        </ul>
+
+        <div class="bl-landing__main">
+          <section class="bl-about">
+            <h2 class="bl-landing__heading">About the Game</h2>
+            <p>Every collector keeps a list. Here you build yours a card at a time &mdash; draft
+               one from the market, find it a home in your grid, and watch a scattered collection
+               turn into something with shape.</p>
+            <p>Every card carries two symbols, and both of them score. Line four up and you have
+               a run &mdash; but you only ever place twenty cards into thirty spaces, so the gaps
+               you leave matter as much as the cards you take.</p>
+          </section>
+
+          <section class="bl-play">
+            <h2 class="bl-play__title">Take the Field</h2>
+
+            <div class="bl-setup__section">
+              <span class="bl-setup__label">Choose Your Deck</span>
+              <div class="bl-deck-grid" id="deckGrid"></div>
+              <div class="bl-deck-indicator" id="selectedDeckIndicator"></div>
+            </div>
+
+            <div class="bl-setup__section">
+              <label class="bl-setup__label" for="playerCount">Number of Players</label>
+              <select id="playerCount" class="bl-setup__select">
+                <option value="1">1 Player (Solo)</option>
+                <option value="2" selected>2 Players</option>
+                <option value="3">3 Players</option>
+                <option value="4">4 Players</option>
+                <option value="5">5 Players</option>
+              </select>
+            </div>
+
+            <div id="playerSetup" class="bl-setup__section"></div>
+
+            <div class="bl-setup__section">
+              <span class="bl-setup__label">Field Notes</span>
+              <label class="bl-setup__check" for="fieldNotesToggle">
+                <input type="checkbox" id="fieldNotesToggle" checked>
+                <span>Play with the ones I&rsquo;ve already spotted</span>
+              </label>
+              <div id="fieldNotesCountGroup">
+                <label class="bl-setup__sublabel" for="fieldNotesCount">How many have you seen?</label>
+                <input type="range" id="fieldNotesCount" min="0" max="100" value="25">
+                <span class="bl-slider-value" id="countDisplay">25 cards ticked</span>
+                <p class="bl-form-hint">We&rsquo;ll tick that many cards at random for you.</p>
+              </div>
+            </div>
+
+            <div class="bl-play__actions">
+              <button class="btn btn-secondary" id="rulesButton">📖 Rules</button>
+              <button class="bl-btn bl-btn-primary" id="startButton">Start Game</button>
+            </div>
+            <p class="bl-play__hint">Set every player to AI to watch a demo game.</p>
+          </section>
+
+          <ul class="bl-features">
+            <li><strong>One decision, two payoffs.</strong> A card&rsquo;s two symbols score separately, so every draft pulls in two directions at once.</li>
+            <li><strong>Field Notes.</strong> Tick the ones you&rsquo;ve seen for real and they score you a bonus &mdash; a game that grows with its owner.</li>
+            <li><strong>Three decks in the box.</strong> Australian birds, British birds, or a tour of London &mdash; same elegant rules, new list.</li>
+            <li><strong>Twenty minutes, taught in two.</strong> Draft a card, place a card. Everything else is the puzzle.</li>
+          </ul>
         </div>
-        <p class="bl-setup__intro">Draft cards, build your grid, score runs of 4.</p>
 
-        <!-- Deck Selection Grid -->
-        <div class="bl-setup__section">
-          <label class="bl-setup__label">Select Deck</label>
-          <div class="bl-deck-grid" id="deckGrid"></div>
-          <div class="bl-deck-indicator" id="selectedDeckIndicator"></div>
-        </div>
-
-        <!-- Number of Players -->
-        <div class="bl-setup__section">
-          <label class="bl-setup__label">Number of Players</label>
-          <select id="playerCount" class="bl-setup__select">
-            <option value="1">1 Player (Solo)</option>
-            <option value="2" selected>2 Players</option>
-            <option value="3">3 Players</option>
-            <option value="4">4 Players</option>
-            <option value="5">5 Players</option>
-          </select>
-        </div>
-
-        <!-- Player Configuration -->
-        <div id="playerSetup" class="bl-setup__section"></div>
-
-        <!-- Field Notes Toggle -->
-        <div class="bl-setup__section">
-          <label class="bl-setup__label">Field Notes (Optional)</label>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <input type="checkbox" id="fieldNotesToggle" checked>
-            <label for="fieldNotesToggle" style="margin: 0; font-weight: normal;">Track cards you've seen</label>
-          </div>
-        </div>
-
-        <!-- Field Notes Count -->
-        <div class="bl-setup__section" id="fieldNotesCountGroup">
-          <label for="fieldNotesCount">How many cards have you seen? (0–100)</label>
-          <input type="range" id="fieldNotesCount" min="0" max="100" value="25">
-          <span class="bl-slider-value" id="countDisplay">25 cards ticked</span>
-          <p class="bl-form-hint">We'll randomly mark that many cards as ticked.</p>
-        </div>
-
-        <button class="bl-btn bl-btn-primary" id="startButton">Start Game</button>
+        <footer class="bl-landing__footer">
+          <p>A game by Dean Morris &middot;
+             <a href="https://www.wombatgamefactory.com" target="_blank" rel="noopener">Wombat Game Factory</a></p>
+          <p class="bl-landing__fineprint">Prototype art &mdash; a tabletop game in development.</p>
+        </footer>
       </div>
     </div>
   `;
@@ -89,17 +142,23 @@ export function renderSetupScreen(container, onStart) {
   let selectedDeck = 'australian';
 
   DECKS.forEach((deck, index) => {
-    const deckCard = document.createElement('div');
+    const deckCard = document.createElement('button');
+    deckCard.type = 'button';
     deckCard.className = `bl-deck-card ${index === 0 ? 'active' : ''}`;
     deckCard.dataset.deck = deck.id;
+    deckCard.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
     deckCard.innerHTML = `
       <img src="${deck.image}" alt="${deck.name}" class="bl-deck-card__image">
-      <div class="bl-deck-card__name">${deck.name}</div>
+      <span class="bl-deck-card__name">${deck.name}</span>
     `;
 
     deckCard.addEventListener('click', () => {
-      deckGrid.querySelectorAll('.bl-deck-card').forEach(card => card.classList.remove('active'));
+      deckGrid.querySelectorAll('.bl-deck-card').forEach(card => {
+        card.classList.remove('active');
+        card.setAttribute('aria-pressed', 'false');
+      });
       deckCard.classList.add('active');
+      deckCard.setAttribute('aria-pressed', 'true');
       selectedDeck = deck.id;
       updateDeckIndicator();
     });
@@ -107,12 +166,22 @@ export function renderSetupScreen(container, onStart) {
     deckGrid.appendChild(deckCard);
   });
 
+  // The hero art is the chosen deck's card back, so picking a deck re-skins the
+  // whole page rather than just ticking a radio button.
   function updateDeckIndicator() {
-    const selectedDeckName = DECKS.find(d => d.id === selectedDeck)?.name || 'Australian Birds';
+    const deck = DECKS.find(d => d.id === selectedDeck) || DECKS[0];
+
     const indicator = container.querySelector('#selectedDeckIndicator');
-    if (indicator) {
-      indicator.textContent = `Selected: ${selectedDeckName}`;
+    if (indicator) indicator.textContent = `Selected: ${deck.name}`;
+
+    const heroArt = container.querySelector('#heroArt');
+    if (heroArt && !heroArt.src.endsWith(deck.image)) {
+      heroArt.src = deck.image;
+      heroArt.alt = deck.alt;
     }
+
+    const heroTagline = container.querySelector('#heroTagline');
+    if (heroTagline) heroTagline.textContent = deck.tagline;
   }
 
   // Initialize deck indicator
