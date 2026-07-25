@@ -84,12 +84,21 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Warm sand-to-cream wash, a soft green glow at the top, and a tiled botanical
+   motif — enough texture that the white panels read as paper laid on a surface,
+   faint enough that nothing competes with the card art. */
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  background-color: var(--color-bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='104' viewBox='0 0 104 104'%3E%3Cg fill='none' stroke='%231A4731' stroke-opacity='0.15' stroke-width='1' stroke-linecap='round'%3E%3Cg transform='translate(14 24) rotate(-27)'%3E%3Cpath d='M0 0c11-8 29-8 38 0-9 8-27 8-38 0z'/%3E%3Cpath d='M0 0h38'/%3E%3Cpath d='M-9 3 0 0'/%3E%3C/g%3E%3Cg transform='translate(62 70) rotate(16)'%3E%3Cpath d='M0 0c11-8 29-8 38 0-9 8-27 8-38 0z'/%3E%3Cpath d='M0 0h38'/%3E%3Cpath d='M-9 -3 0 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(ellipse 1100px 520px at 50% -8%, rgba(26, 71, 49, 0.14), transparent 70%),
+    linear-gradient(180deg, #E8DDCA 0%, #F2ECE0 48%, #EFE8DA 100%);
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-attachment: scroll, fixed, fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -132,50 +141,51 @@ p { margin: 0; }
 .bl-landing {
   max-width: 1080px;
   margin: 0 auto;
-  padding: var(--spacing-2xl) var(--spacing-xl) 0;
+  padding: var(--spacing-lg) var(--spacing-xl) 0;
 }
 
-/* --- Hero: the chosen deck's card back, title art and all --- */
+/* --- Hero: the chosen deck's card back, title art and all.
+       It sits beside the play panel rather than above it so that Start Game
+       stays above the fold on a laptop. --- */
 
 .bl-hero {
   text-align: center;
-  margin-bottom: var(--spacing-2xl);
 }
 
 .bl-hero__art {
   display: block;
   width: 100%;
-  max-width: 800px;
+  max-width: 400px;
   margin: 0 auto;
   aspect-ratio: 1.385;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 10px;
   border: 1px solid rgba(26, 71, 49, 0.25);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.6) inset,
-    0 18px 44px rgba(28, 25, 23, 0.22);
+    0 10px 28px rgba(28, 25, 23, 0.2);
 }
 
 .bl-hero__tagline {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
-  font-size: clamp(18px, 2.6vw, 26px);
+  font-size: clamp(16px, 2vw, 20px);
   line-height: 1.35;
   color: var(--color-accent);
-  margin-top: var(--spacing-xl);
+  margin-top: var(--spacing-md);
 }
 
-/* --- Box-back stat strip --- */
+/* --- Box-back stat strip, sitting under the blurb --- */
 
 .bl-facts {
   list-style: none;
-  margin: 0 0 var(--spacing-2xl);
-  padding: 0 0 var(--spacing-lg);
+  margin: var(--spacing-lg) 0 0;
+  padding: var(--spacing-lg) 0 0;
   display: flex;
-  justify-content: center;
-  gap: clamp(24px, 6vw, 72px);
-  border-bottom: 1px solid var(--color-border);
+  justify-content: space-around;
+  gap: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
 }
 
 .bl-facts li {
@@ -203,22 +213,20 @@ p { margin: 0; }
 
 /* --- About + play panel --- */
 
-/* Two columns: prose stacked over the feature bullets on the left, the play
-   panel spanning both rows on the right so the pair reads as one block. */
+/* Art and blurb stack on the left, the play panel spans both rows on the
+   right, so the panel starts at the top of the page instead of below the art. */
 .bl-landing__main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  /* auto/1fr keeps the prose at its natural height and lets the bullets take
-     the slack, instead of the taller play panel padding both rows out. */
   grid-template-rows: auto 1fr;
   gap: var(--spacing-lg) var(--spacing-xl);
   align-items: start;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
 }
 
-.bl-landing__main > .bl-about    { grid-column: 1; grid-row: 1; }
-.bl-landing__main > .bl-play     { grid-column: 2; grid-row: 1 / span 2; }
-.bl-landing__main > .bl-features { grid-column: 1; grid-row: 2; }
+.bl-landing__main > .bl-hero  { grid-column: 1; grid-row: 1; }
+.bl-landing__main > .bl-about { grid-column: 1; grid-row: 2; }
+.bl-landing__main > .bl-play  { grid-column: 2; grid-row: 1 / span 2; }
 
 .bl-landing__heading {
   font-family: var(--font-display);
@@ -252,7 +260,7 @@ p { margin: 0; }
   border: 2px solid var(--color-accent-gold);
   border-radius: 12px;
   box-shadow: var(--shadow-lg);
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg) var(--spacing-xl);
 }
 
 .bl-play__title {
@@ -260,13 +268,13 @@ p { margin: 0; }
   font-size: 23px;
   font-weight: 700;
   color: var(--color-accent);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
 }
 
 .bl-play__actions {
   display: flex;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
 
 .bl-play__actions .btn-secondary { flex: 0 0 auto; }
@@ -276,40 +284,6 @@ p { margin: 0; }
   text-align: center;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-}
-
-/* --- Feature bullets --- */
-
-.bl-features {
-  list-style: none;
-  margin: 0;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  display: grid;
-  gap: var(--spacing-md);
-}
-
-.bl-features li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 14px;
-  line-height: 1.65;
-  color: #57534E;
-}
-
-.bl-features li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-accent-gold);
-}
-
-.bl-features strong {
-  color: var(--color-accent);
-  font-weight: 600;
 }
 
 /* --- Footer --- */
@@ -335,7 +309,7 @@ p { margin: 0; }
 /* --- Setup sections inside the play panel --- */
 
 .bl-setup__section {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   text-align: left;
 }
 
@@ -363,7 +337,7 @@ p { margin: 0; }
   font-size: var(--font-size-base);
   color: var(--color-text);
   cursor: pointer;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .bl-setup__check input[type="checkbox"] {
@@ -454,15 +428,6 @@ p { margin: 0; }
 
 .bl-deck-card.active .bl-deck-card__name {
   color: var(--color-accent);
-}
-
-.bl-deck-indicator {
-  text-align: center;
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  font-weight: 500;
-  height: 20px;
 }
 
 /* Player setup rows */
@@ -561,7 +526,7 @@ p { margin: 0; }
 .bl-form-hint {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
   margin-bottom: 0;
 }
 
@@ -1173,17 +1138,19 @@ button:disabled, .btn:disabled {
     grid-template-rows: auto;
   }
 
-  /* Collapse the explicit placement so DOM order (about, play, features) wins */
+  /* Drop the explicit placement so DOM order (art, blurb, panel) wins */
+  .bl-landing__main > .bl-hero,
   .bl-landing__main > .bl-about,
-  .bl-landing__main > .bl-play,
-  .bl-landing__main > .bl-features {
+  .bl-landing__main > .bl-play {
     grid-column: 1;
     grid-row: auto;
   }
-
 }
 
 @media (max-width: 560px) {
+  /* Smaller art so the panel is a shorter scroll away on a phone */
+  .bl-hero__art { max-width: 260px; }
+
   .bl-facts {
     flex-wrap: wrap;
     gap: var(--spacing-lg) var(--spacing-2xl);

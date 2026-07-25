@@ -53,20 +53,13 @@ export function renderSetupScreen(container, onStart) {
     <div class="bl-screen bl-setup-screen">
       <div class="bl-landing">
 
-        <header class="bl-hero">
-          <img class="bl-hero__art" id="heroArt"
-               src="${DECKS[0].image}" alt="${DECKS[0].alt}">
-          <p class="bl-hero__tagline" id="heroTagline">${DECKS[0].tagline}</p>
-        </header>
-
-        <ul class="bl-facts">
-          <li><strong>1&ndash;5</strong><span>Players</span></li>
-          <li><strong>20&ndash;30</strong><span>Minutes</span></li>
-          <li><strong>1.7</strong><span>Weight</span></li>
-          <li><strong>8+</strong><span>Age</span></li>
-        </ul>
-
         <div class="bl-landing__main">
+          <header class="bl-hero">
+            <img class="bl-hero__art" id="heroArt"
+                 src="${DECKS[0].image}" alt="${DECKS[0].alt}">
+            <p class="bl-hero__tagline" id="heroTagline">${DECKS[0].tagline}</p>
+          </header>
+
           <section class="bl-about">
             <h2 class="bl-landing__heading">About the Game</h2>
             <p>Every collector keeps a list. Here you build yours a card at a time &mdash; draft
@@ -75,6 +68,13 @@ export function renderSetupScreen(container, onStart) {
             <p>Every card carries two symbols, and both of them score. Line four up and you have
                a run &mdash; but you only ever place twenty cards into thirty spaces, so the gaps
                you leave matter as much as the cards you take.</p>
+
+            <ul class="bl-facts">
+              <li><strong>1&ndash;5</strong><span>Players</span></li>
+              <li><strong>20&ndash;30</strong><span>Minutes</span></li>
+              <li><strong>1.7</strong><span>Weight</span></li>
+              <li><strong>8+</strong><span>Age</span></li>
+            </ul>
           </section>
 
           <section class="bl-play">
@@ -83,7 +83,6 @@ export function renderSetupScreen(container, onStart) {
             <div class="bl-setup__section">
               <span class="bl-setup__label">Choose Your Deck</span>
               <div class="bl-deck-grid" id="deckGrid"></div>
-              <div class="bl-deck-indicator" id="selectedDeckIndicator"></div>
             </div>
 
             <div class="bl-setup__section">
@@ -120,12 +119,6 @@ export function renderSetupScreen(container, onStart) {
             <p class="bl-play__hint">Set every player to AI to watch a demo game.</p>
           </section>
 
-          <ul class="bl-features">
-            <li><strong>One decision, two payoffs.</strong> A card&rsquo;s two symbols score separately, so every draft pulls in two directions at once.</li>
-            <li><strong>Field Notes.</strong> Tick the ones you&rsquo;ve seen for real and they score you a bonus &mdash; a game that grows with its owner.</li>
-            <li><strong>Three decks in the box.</strong> Australian birds, British birds, or a tour of London &mdash; same elegant rules, new list.</li>
-            <li><strong>Twenty minutes, taught in two.</strong> Draft a card, place a card. Everything else is the puzzle.</li>
-          </ul>
         </div>
 
         <footer class="bl-landing__footer">
@@ -167,12 +160,10 @@ export function renderSetupScreen(container, onStart) {
   });
 
   // The hero art is the chosen deck's card back, so picking a deck re-skins the
-  // whole page rather than just ticking a radio button.
+  // page rather than just ticking a radio button — which is also why there is no
+  // separate "selected deck" caption.
   function updateDeckIndicator() {
     const deck = DECKS.find(d => d.id === selectedDeck) || DECKS[0];
-
-    const indicator = container.querySelector('#selectedDeckIndicator');
-    if (indicator) indicator.textContent = `Selected: ${deck.name}`;
 
     const heroArt = container.querySelector('#heroArt');
     if (heroArt && !heroArt.src.endsWith(deck.image)) {
