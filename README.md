@@ -77,7 +77,7 @@ Edit the habitat/diet color maps in `src/engine/cards.js` and update `--habitat-
 
 ### Analytics
 
-Replace `G-PLACEHOLDER` in `index.html` with your Google Analytics 4 tracking ID.
+`index.html` loads the Wombat Game Factory Google Analytics 4 property (`G-FNNQF917JJ`), the same tag used on wombatgamefactory.com, alongside the CookieYes consent banner. `src/ui/main.js` sends `game_start` and `game_complete` events.
 
 ## Testing
 
